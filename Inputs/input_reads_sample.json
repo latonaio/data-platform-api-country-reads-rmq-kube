@@ -1,0 +1,31 @@
+{
+	"connection_key": "request",
+	"result": true,
+	"redis_key": "abcdefg",
+	"filepath": "/var/lib/aion/Data/rededge_sdc/abcdef.json",
+	"api_status_code": 200,
+	"runtime_session_id": "boi9ar543dg91ipdnspi099u231280ab0v8af0ew",
+	"business_partner": null,
+	"service_label": "COUNTRY",
+	"api_type": "reads",
+	"Country": {
+		"Country": "",
+		"GlobalRegion": "",
+		"CreationDate": "",
+		"LastChangeDate": "",
+		"IsMarkedForDeletion": null,
+		"CountryText": [
+			{
+				"Language": "",
+				"CountryName": "",
+				"CreationDate": "",
+				"LastChangeDate": "",
+				"IsMarkedForDeletion": null
+			}
+		]
+	},
+	"api_schema": "DPFMCountryReads",
+	"accepter": [
+		"Country"
+	]
+}
