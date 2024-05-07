@@ -19,7 +19,7 @@ APIサービス URL: https://xxx.xxx.io/api/API_COUNTRY_SRV/reads/
 data-platform-api-country-reads-rmq-kube には、次の API をコールするためのリソースが含まれています。  
 
 * A_Country（データ連携基盤 国 - 国データ）
-* A_CountryText（データ連携基盤 国 - 国テキストデータ）
+* A_Text（データ連携基盤 国 - 国テキストデータ）
 
 ## API への 値入力条件 の 初期値
 data-platform-api-country-reads-rmq-kube において、API への値入力条件の初期値は、入力ファイルレイアウトの種別毎に、次の通りとなっています。  
@@ -36,7 +36,7 @@ accepter において 下記の例のように、データの種別（＝APIの�
   
 ```
 	"api_schema": "DPFMCountryReads",
-	"accepter": ["Country", "CountryText"],
+	"accepter": ["Country", "Text"],
 ```
   
 * 全データを取得する際のsample.jsonの記載例(2)  
@@ -45,7 +45,7 @@ accepter において 下記の例のように、データの種別（＝APIの�
 
 ```
 	"api_schema": "DPFMCountryReads",
-	"accepter": ["Country", "CountryText"],
+	"accepter": ["Country", "Text"],
 ```
 
 ## 指定されたデータ種別のコール

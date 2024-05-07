@@ -4,6 +4,7 @@ import (
 	"context"
 	dpfm_api_input_reader "data-platform-api-country-reads-rmq-kube/DPFM_API_Input_Reader"
 	dpfm_api_output_formatter "data-platform-api-country-reads-rmq-kube/DPFM_API_Output_Formatter"
+	"fmt"
 	"strings"
 	"sync"
 
@@ -20,7 +21,7 @@ func (c *DPFMAPICaller) readSqlProcess(
 	log *logger.Logger,
 ) interface{} {
 	var country *[]dpfm_api_output_formatter.Country
-	var countryText *[]dpfm_api_output_formatter.CountryText
+	var countryText *[]dpfm_api_output_formatter.Text
 	for _, fn := range accepter {
 		switch fn {
 		case "Country":
@@ -31,21 +32,21 @@ func (c *DPFMAPICaller) readSqlProcess(
 			func() {
 				country = c.Countries(mtx, input, output, errs, log)
 			}()
-		case "CountryText":
+		case "Text":
 			func() {
-				countryText = c.CountryText(mtx, input, output, errs, log)
+				countryText = c.Text(mtx, input, output, errs, log)
 			}()
-		case "CountryTexts":
+		case "Texts":
 			func() {
-				countryText = c.CountryTexts(mtx, input, output, errs, log)
+				countryText = c.Texts(mtx, input, output, errs, log)
 			}()
 		default:
 		}
 	}
 
 	data := &dpfm_api_output_formatter.Message{
-		Country:     country,
-		CountryText: countryText,
+		Country: country,
+		Text:    countryText,
 	}
 
 	return data
@@ -91,6 +92,7 @@ func (c *DPFMAPICaller) Countries(
 	errs *[]error,
 	log *logger.Logger,
 ) *[]dpfm_api_output_formatter.Country {
+	where := "WHERE 1 = 1"
 
 	if input.Country.IsMarkedForDeletion != nil {
 		where = fmt.Sprintf("%s\nAND IsMarkedForDeletion = %v", where, *input.Country.IsMarkedForDeletion)
@@ -116,16 +118,16 @@ func (c *DPFMAPICaller) Countries(
 	return data
 }
 
-func (c *DPFMAPICaller) CountryText(
+func (c *DPFMAPICaller) Text(
 	mtx *sync.Mutex,
 	input *dpfm_api_input_reader.SDC,
 	output *dpfm_api_output_formatter.SDC,
 	errs *[]error,
 	log *logger.Logger,
-) *[]dpfm_api_output_formatter.CountryText {
+) *[]dpfm_api_output_formatter.Text {
 	var args []interface{}
 	country := input.Country.Country
-	countryText := input.Country.CountryText
+	countryText := input.Country.Text
 
 	cnt := 0
 	for _, v := range countryText {
@@ -136,7 +138,7 @@ func (c *DPFMAPICaller) CountryText(
 	repeat := strings.Repeat("(?,?),", cnt-1) + "(?,?)"
 	rows, err := c.db.Query(
 		`SELECT *
-		FROM DataPlatformMastersAndTransactionsMysqlKube.data_platform_country_country_text_data
+		FROM DataPlatformMastersAndTransactionsMysqlKube.data_platform_country_text_data
 		WHERE (Country, Language) IN ( `+repeat+` );`, args...,
 	)
 	if err != nil {
@@ -145,7 +147,7 @@ func (c *DPFMAPICaller) CountryText(
 	}
 	defer rows.Close()
 
-	data, err := dpfm_api_output_formatter.ConvertToCountryText(rows)
+	data, err := dpfm_api_output_formatter.ConvertToText(rows)
 	if err != nil {
 		*errs = append(*errs, err)
 		return nil
@@ -154,15 +156,15 @@ func (c *DPFMAPICaller) CountryText(
 	return data
 }
 
-func (c *DPFMAPICaller) CountryTexts(
+func (c *DPFMAPICaller) Texts(
 	mtx *sync.Mutex,
 	input *dpfm_api_input_reader.SDC,
 	output *dpfm_api_output_formatter.SDC,
 	errs *[]error,
 	log *logger.Logger,
-) *[]dpfm_api_output_formatter.CountryText {
+) *[]dpfm_api_output_formatter.Text {
 	var args []interface{}
-	countryText := input.Country.CountryText
+	countryText := input.Country.Text
 
 	cnt := 0
 	for _, v := range countryText {
@@ -173,7 +175,7 @@ func (c *DPFMAPICaller) CountryTexts(
 	repeat := strings.Repeat("(?),", cnt-1) + "(?)"
 	rows, err := c.db.Query(
 		`SELECT * 
-		FROM DataPlatformMastersAndTransactionsMysqlKube.data_platform_country_country_text_data
+		FROM DataPlatformMastersAndTransactionsMysqlKube.data_platform_country_text_data
 		WHERE Language IN ( `+repeat+` );`, args...,
 	)
 	if err != nil {
@@ -183,7 +185,7 @@ func (c *DPFMAPICaller) CountryTexts(
 	defer rows.Close()
 
 	//
-	data, err := dpfm_api_output_formatter.ConvertToCountryText(rows)
+	data, err := dpfm_api_output_formatter.ConvertToText(rows)
 	if err != nil {
 		*errs = append(*errs, err)
 		return nil

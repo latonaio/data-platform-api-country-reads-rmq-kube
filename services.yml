@@ -44,11 +44,9 @@ metadata:
 spec:
   selector:
     run: data-platform-api-country-reads-rmq-kube
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: api
       port: 8080
       protocol: TCP
       targetPort: 8080
-      nodePort: 30688
-      

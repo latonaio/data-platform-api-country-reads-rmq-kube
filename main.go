@@ -90,8 +90,7 @@ func callProcess(rmq *rabbitmq.RabbitmqClient, caller *dpfm_api_caller.DPFMAPICa
 	output.Message = res
 
 	l.JsonParseOut(output)
-	// rmq.Send(conf.RMQ.QueueToResponse(), output)
-	rmq.Send("data-platform-api-request-reads-cache-manager-receive-queue", output)
+	rmq.Send(conf.RMQ.QueueToResponse(), output)
 
 	return nil
 }
@@ -104,8 +103,8 @@ func getAccepter(input *dpfm_api_input_reader.SDC) []string {
 
 	if accepter[0] == "All" {
 		accepter = []string{
-			"Country", "Countries", 
-			"CountryText", "CountryTexts",
+			"Country", "Countries",
+			"Text", "Texts",
 		}
 	}
 	return accepter

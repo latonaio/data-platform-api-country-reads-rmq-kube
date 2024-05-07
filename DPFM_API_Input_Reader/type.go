@@ -12,7 +12,7 @@ type EC_MC struct {
 		PickedQuantity string `json:"picked_quantity"`
 		Price          string `json:"price"`
 		Batch          string `json:"batch"`
-	} 						  `json:"document"`
+	} `json:"document"`
 	BusinessPartner struct {
 		DocumentNo           string `json:"document_no"`
 		Status               string `json:"status"`
@@ -39,8 +39,8 @@ type EC_MC struct {
 			ActualStartTime          string `json:"actual_start_time"`
 			ActualValidatedDate      string `json:"actual_validated_date"`
 			ActualValidatedTime      string `json:"actual_validated_time"`
-		} 									`json:"work"`
-	} 										`json:"business_partner"`
+		} `json:"work"`
+	} `json:"business_partner"`
 	APISchema     string   `json:"api_schema"`
 	Accepter      []string `json:"accepter"`
 	MaterialCode  string   `json:"material_code"`
@@ -54,35 +54,35 @@ type EC_MC struct {
 }
 
 type SDC struct {
-	ConnectionKey     string        `json:"connection_key"`
-	Result            bool          `json:"result"`
-	RedisKey          string        `json:"redis_key"`
-	Filepath          string        `json:"filepath"`
-	APIStatusCode     int           `json:"api_status_code"`
-	RuntimeSessionID  string        `json:"runtime_session_id"`
-	BusinessPartnerID *int          `json:"business_partner"`
-	ServiceLabel      string        `json:"service_label"`
-	APIType           string        `json:"api_type"`
-	Country		  	  Country 		`json:"Country"`
-	APISchema         string        `json:"api_schema"`
-	Accepter          []string      `json:"accepter"`
-	Deleted           bool          `json:"deleted"`
+	ConnectionKey     string   `json:"connection_key"`
+	Result            bool     `json:"result"`
+	RedisKey          string   `json:"redis_key"`
+	Filepath          string   `json:"filepath"`
+	APIStatusCode     int      `json:"api_status_code"`
+	RuntimeSessionID  string   `json:"runtime_session_id"`
+	BusinessPartnerID *int     `json:"business_partner"`
+	ServiceLabel      string   `json:"service_label"`
+	APIType           string   `json:"api_type"`
+	Country           Country  `json:"Country"`
+	APISchema         string   `json:"api_schema"`
+	Accepter          []string `json:"accepter"`
+	Deleted           bool     `json:"deleted"`
 }
 
 type Country struct {
-	Country				string			`json:"Country"`
-	GlobalRegion		*string			`json:"GlobalRegion"`
-	CreationDate		*string			`json:"CreationDate"`
-	LastChangeDate		*string			`json:"LastChangeDate"`
-	IsMarkedForDeletion	*bool			`json:"IsMarkedForDeletion"`
-	CountryText			[]CountryText 	`json:"CountryText"`
+	Country             string  `json:"Country"`
+	GlobalRegion        *string `json:"GlobalRegion"`
+	CreationDate        *string `json:"CreationDate"`
+	LastChangeDate      *string `json:"LastChangeDate"`
+	IsMarkedForDeletion *bool   `json:"IsMarkedForDeletion"`
+	Text                []Text  `json:"Text"`
 }
 
-type CountryText struct {
-	Country     		string   `json:"Country"`
-	Language          	string   `json:"Language"`
-	CountryName			*string	 `json:"CountrydName"`
-	CreationDate		*string  `json:"CreationDate"`
-	LastChangeDate		*string	 `json:"LastChangeDate"`
-	IsMarkedForDeletion	*bool	 `json:"IsMarkedForDeletion"`
+type Text struct {
+	Country             string  `json:"Country"`
+	Language            string  `json:"Language"`
+	CountryName         *string `json:"CountrydName"`
+	CreationDate        *string `json:"CreationDate"`
+	LastChangeDate      *string `json:"LastChangeDate"`
+	IsMarkedForDeletion *bool   `json:"IsMarkedForDeletion"`
 }

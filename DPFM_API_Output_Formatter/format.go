@@ -29,25 +29,25 @@ func ConvertToCountry(rows *sql.Rows) (*[]Country, error) {
 
 		data := pm
 		country = append(country, Country{
-			Country:				data.Country,
-			GlobalRegion:			data.GlobalRegion,
-			CreationDate:			data.CreationDate,
-			LastChangeDate:			data.LastChangeDate,
-			IsMarkedForDeletion:	data.IsMarkedForDeletion,
+			Country:             data.Country,
+			GlobalRegion:        data.GlobalRegion,
+			CreationDate:        data.CreationDate,
+			LastChangeDate:      data.LastChangeDate,
+			IsMarkedForDeletion: data.IsMarkedForDeletion,
 		})
 	}
 
 	return &country, nil
 }
 
-func ConvertToCountryText(rows *sql.Rows) (*[]CountryText, error) {
+func ConvertToText(rows *sql.Rows) (*[]Text, error) {
 	defer rows.Close()
-	countryText := make([]CountryText, 0)
+	countryText := make([]Text, 0)
 
 	i := 0
 	for rows.Next() {
 		i++
-		pm := &requests.CountryText{}
+		pm := &requests.Text{}
 
 		err := rows.Scan(
 			&pm.Country,
@@ -63,13 +63,13 @@ func ConvertToCountryText(rows *sql.Rows) (*[]CountryText, error) {
 		}
 
 		data := pm
-		countryText = append(countryText, CountryText{
-			Country:     			data.Country,
-			Language:          		data.Language,
-			CountryName:			data.CountryName,
-			CreationDate:			data.CreationDate,
-			LastChangeDate:			data.LastChangeDate,
-			IsMarkedForDeletion:	data.IsMarkedForDeletion,
+		countryText = append(countryText, Text{
+			Country:             data.Country,
+			Language:            data.Language,
+			CountryName:         data.CountryName,
+			CreationDate:        data.CreationDate,
+			LastChangeDate:      data.LastChangeDate,
+			IsMarkedForDeletion: data.IsMarkedForDeletion,
 		})
 	}
 
